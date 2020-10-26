@@ -42,3 +42,13 @@ let xs3 = 3;
 let xx:number | string | boolean;
 let sts:number = (<string>xx).length
 let sts1:number = ( xx as string ).length
+
+
+// 锁定键值选择
+interface Ipoint {
+    x: 'x' | 'y'
+}
+
+const obj: Ipoint = {
+    x: 'x'
+}

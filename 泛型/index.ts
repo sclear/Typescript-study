@@ -123,3 +123,16 @@ const apis: Api = {
         })
     }
 }
+
+interface ItestKeyof {
+    name: string
+    sex: number
+    age: number
+}
+
+function Testko<T extends object, K extends keyof T>(obj: T,keys: K): T[K] {
+    return obj[keys]
+}
+
+
+

@@ -29,3 +29,19 @@ interface Logger {
 
 
   // infer定义变量 分发类型，多用于条件语句中
+
+  type Peple = {
+      skil: string,
+      age: number,
+      sex: string
+  }
+  type T = '1' | ''
+
+//   type UnionKey<P> = P extends unknown ? keyof P : never
+export type UnionKey<P> = P extends infer P ? P : never
+
+  let type: UnionKey<Peple> = {
+      skil: '1',
+      age: 1,
+      sex: '1'
+  }

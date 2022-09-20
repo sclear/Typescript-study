@@ -43,3 +43,5 @@ type ClonePa = ["name", "sex"][number];
 type Tip<T extends { length: number }> = T;
 
 type NewTip = Tip<string>;
+
+const b: Record<string, string>;

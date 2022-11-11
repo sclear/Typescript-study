@@ -95,3 +95,54 @@ type ExampleType = Promise<string>;
 type MyAwaited<T extends Promise<any>> = T extends Promise<infer A> ? A : never;
 
 type Answer_189 = MyAwaited<ExampleType>;
+
+/**
+ * If
+ */
+
+type MyIf<R, T, K> = R extends true ? T : K;
+
+type Answer_268 = MyIf<true, 1, 2>;
+
+/**
+ * Concat
+ */
+
+type MyConcat<T extends any[], U extends any[]> = [...T, ...U];
+
+type Answer_533 = MyConcat<[1], ["2"]>;
+
+/**
+ * Push
+ */
+
+type MyPush<T extends unknown[], U> = [...T, U];
+
+type Answer_3057 = MyPush<[1, 2], "3">;
+
+/**
+ * Includes
+ */
+
+type MyIncludes<T extends unknown[], U> = U extends T[number] ? true : false;
+
+type Answer_898 = MyIncludes<[1, 2], 2>;
+
+// 递归
+type MyIncludesRa<T extends unknown[], U> = T extends [infer A, ...infer B]
+  ? A extends U
+    ? true
+    : MyIncludesRa<B, U>
+  : false;
+
+type Answer_Ra_898 = MyIncludesRa<[1, 2], 3>;
+
+/**
+ * UnShift
+ */
+
+// type MyShift<T extends unknown[]> = T extends [infer A, ...infer B] ? A : never
+
+type MyUnShift<T extends unknown[], U> = [U, ...T];
+
+type Answer_3060 = MyUnShift<[1, 3], "3">;

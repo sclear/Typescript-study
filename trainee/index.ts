@@ -51,10 +51,47 @@ type Answer_3 = MyOmit<Todo, "description" | "title">;
 
 const tuple = ["tesla", "model 3", "model X", "model Y"] as const;
 
-type GetV<T extends readonly any[]> = {
+type TupleToObject<T extends readonly any[]> = {
   [P in T[number]]: P;
 };
 
-type G = GetV<typeof tuple>;
+type Answer_11 = TupleToObject<typeof tuple>;
 
-// type Answer_11 = TupleToObject<Todo, "description" | "title">;
+/**
+ * First
+ */
+
+type arr1 = ["a", "b", "c"];
+
+type MyFirst<T extends any[]> = T extends [infer A, ...infer B] ? A : B;
+
+type Answer_14 = MyFirst<arr1>;
+
+/**
+ * Length
+ */
+type tesla = ["tesla", "model 3", "model X", "model Y"];
+
+type MyLength<T extends any[]> = T["length"];
+
+type Answer_18 = MyLength<tesla>;
+
+/**
+ * Exclude
+ */
+
+type Test_43 = "a" | "b" | "c";
+
+type MyExcludes<T, K> = T extends K ? never : T;
+
+type Answer_43 = MyExcludes<Test_43, "b">;
+
+/**
+ * MyAwaited
+ */
+
+type ExampleType = Promise<string>;
+
+type MyAwaited<T extends Promise<any>> = T extends Promise<infer A> ? A : never;
+
+type Answer_189 = MyAwaited<ExampleType>;

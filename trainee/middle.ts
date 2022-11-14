@@ -49,3 +49,40 @@ type MyDeepReadonly<T> = {
 };
 
 type Answer_9 = MyDeepReadonly<X>;
+
+/**
+ * TupleToUnion
+ */
+type Arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+type MyTupleToUnion<T extends unknown[]> = T[number] extends any
+  ? T[number]
+  : never;
+
+type Answer_10 = MyTupleToUnion<Arr>;
+
+// 递归
+
+type MyTupleToUnion_Ra<T extends unknown[]> = T extends [infer A, ...infer B]
+  ? A | MyTupleToUnion<B>
+  : never;
+
+type Answer_10_Ra = MyTupleToUnion<Arr>;
+
+/**
+ * Last
+ */
+
+type MyLast<T extends unknown[]> = T extends [...infer A, infer B] ? B : never;
+
+type Answer_15 = MyLast<Arr>;
+
+/**
+ * TrimLeft
+ */
+
+type str = "  12123234";
+
+type MyTrimLeft<T extends string> = T extends ` ${infer A}` ? MyTrimLeft<A> : T;
+
+type Answer_106 = MyTrimLeft<str>;

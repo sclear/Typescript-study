@@ -81,8 +81,66 @@ type Answer_15 = MyLast<Arr>;
  * TrimLeft
  */
 
-type str = "  12123234";
-
 type MyTrimLeft<T extends string> = T extends ` ${infer A}` ? MyTrimLeft<A> : T;
 
-type Answer_106 = MyTrimLeft<str>;
+type Answer_106 = MyTrimLeft<"  Hello">;
+
+/**
+ * trim
+ */
+
+type MyTrim<T extends string> = T extends ` ${infer A}` | `${infer A} `
+  ? MyTrim<A>
+  : T;
+
+type Answer_108 = MyTrim<"  Hello World  ">;
+
+/**
+ * Capitalize - 首字母大写
+ */
+
+type MyCapitalize<T extends string> = T extends `${infer First}${infer arg}`
+  ? `${Uppercase<First>}${arg}`
+  : never;
+
+type Answer_110 = MyCapitalize<"pizz">;
+
+/**
+ * Replace
+ */
+
+type MyReplace<
+  S extends string,
+  From extends string,
+  To extends string
+> = S extends `${infer A}${From}${infer B}` ? `${A}${To}${B}` : never;
+
+type Answer_116 = MyReplace<"new map", " ", " | ">;
+
+/**
+ * Lookup - 寻找联和类型公共类型
+ */
+// TODO: 审题错误
+type MyLookup<T, U> = T extends U ? T : never;
+
+type Answer_190 = MyLookup<1 | 3, 3>;
+
+/**
+ * Pop 出堆
+ */
+
+type MyPop<T extends unknown[]> = T extends [...infer A, infer B] ? A : never;
+
+type Answer_16 = MyPop<[1, 2, 3, 4, 5]>;
+
+/**
+ * Permutation
+ */
+
+type Permutation<T, U = T> = [T] extends [never]
+  ? []
+  : U extends T
+  ? [U, ...Permutation<Exclude<T, U>>]
+  : never;
+
+type Answer_296 = Permutation<"A" | "B" | "C">;

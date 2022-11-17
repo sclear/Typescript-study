@@ -137,6 +137,8 @@ type Answer_16 = MyPop<[1, 2, 3, 4, 5]>;
  * Permutation
  */
 
+// !!: T extends never 运算中 T = never 会跳过分配返回T(非T不会)
+
 type Permutation<T, U = T> = [T] extends [never]
   ? []
   : U extends T

@@ -126,3 +126,9 @@ interface ItestKeyof {
 function Testko<T extends object, K extends keyof T>(obj: T, keys: K): T[K] {
   return obj[keys];
 }
+
+function testNeverB(): never {
+  throw new Error("007");
+}
+
+let testNeverA: 1 = testNeverB();

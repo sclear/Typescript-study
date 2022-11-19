@@ -146,3 +146,58 @@ type Permutation<T, U = T> = [T] extends [never]
   : never;
 
 type Answer_296 = Permutation<"A" | "B" | "C">;
+
+/**
+ * length of String
+ */
+
+type MyStrLength<
+  T extends string,
+  K extends any[] = []
+> = T extends `${infer A}${infer B}` ? MyStrLength<B, [...K, A]> : K["length"];
+
+type Answer_298 = MyStrLength<"喜欢 唱 跳 Rap 🏀">;
+
+/**
+ * Flatten
+ */
+
+type MyFlatten<T extends any[], K extends any[] = []> = T extends [
+  infer A,
+  ...infer B
+]
+  ? A extends any[]
+    ? MyFlatten<[...A, ...B], K>
+    : MyFlatten<B, [...K, A]>
+  : K;
+
+type Answer_459 = MyFlatten<[1, 2, [3, 4], [[[5]]]]>;
+
+/**
+ * Append to object
+ */
+
+type MyAppendToObject<T extends any, K extends string, V> = {
+  [P in keyof T | K]: P extends keyof T ? T[P] : V;
+};
+
+type Test_527 = { id: "1" };
+
+type Answer_527 = MyAppendToObject<Test_527, "value", 4>;
+
+/**
+ * Absolute
+ */
+
+type MyAbsolute<
+  T extends string,
+  R extends string = ""
+> = `${T}` extends `${infer First}${infer B}`
+  ? First extends "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+    ? MyAbsolute<B, `${R}${First}`>
+    : First extends "-" | "+"
+    ? MyAbsolute<B, R>
+    : MyAbsolute<"", R>
+  : R;
+
+type Mys = MyAbsolute<"-+100--.3434">;

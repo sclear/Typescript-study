@@ -200,4 +200,4 @@ type MyAbsolute<
     : MyAbsolute<"", R>
   : R;
 
-type Mys = MyAbsolute<"-+100--.3434">;
+type Answer_529 = MyAbsolute<"-+100--.3434">;

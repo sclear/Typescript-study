@@ -201,3 +201,51 @@ type MyAbsolute<
   : R;
 
 type Answer_529 = MyAbsolute<"-+100--.3434">;
+
+/**
+ * String to union
+ */
+
+type MyStrToUnion<
+  T extends string,
+  U extends any[] = []
+> = T extends `${infer A}${infer B}` ? MyStrToUnion<B, [...U, A]> : U[number];
+
+type Answer_531 = MyStrToUnion<"123">;
+
+/**
+ * Merge
+ */
+type Foo_599 = {
+  name: string;
+  age: string;
+};
+
+type Coo_599 = {
+  age: number;
+  sex: string;
+};
+
+type MyMerge<T extends object, U extends object> = {
+  [P in keyof T | keyof U]: P extends keyof U
+    ? U[P]
+    : P extends keyof T
+    ? T[P]
+    : never;
+};
+
+type Answer_599 = MyMerge<Foo_599, Coo_599>;
+
+/**
+ * KebabCase
+ */
+
+type MyKebabCase<T, S extends string = ""> = T extends `${infer A}${infer B}`
+  ? A extends Uncapitalize<A>
+    ? MyKebabCase<B, `${S}${A}`>
+    : S extends ""
+    ? MyKebabCase<B, `${Uncapitalize<A>}`>
+    : MyKebabCase<B, `${S}-${Uncapitalize<A>}`>
+  : S;
+
+type Answer_612 = MyKebabCase<"FooBarBaz">;

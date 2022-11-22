@@ -314,7 +314,7 @@ type Answer_949_1 = MyAnyOf<[0, "", false, [], {}]>; // false
  * isNever
  */
 
-type MyIsNever<T> = T extends never ? true : false;
+type MyIsNever<T> = [T] extends [never] ? true : false;
 
 type Answer_1042 = MyIsNever<never>; // expected to be true
 type Answer_1042_1 = MyIsNever<undefined>; // expected to be false

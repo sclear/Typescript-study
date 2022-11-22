@@ -307,9 +307,17 @@ type MyAnyOf<T extends any[]> = T extends [infer F, ...infer R]
     : true
   : false;
 
-type Sample1 = MyAnyOf<[1, "", false, [], {}]>; // true
-type Sample2 = MyAnyOf<[0, "", false, [], {}]>; // false
+type Answer_949 = MyAnyOf<[1, "", false, [], {}]>; // true
+type Answer_949_1 = MyAnyOf<[0, "", false, [], {}]>; // false
 
 /**
  * isNever
  */
+
+type MyIsNever<T> = T extends never ? true : false;
+
+type Answer_1042 = MyIsNever<never>; // expected to be true
+type Answer_1042_1 = MyIsNever<undefined>; // expected to be false
+type Answer_1042_2 = MyIsNever<null>; // expected to be false
+type Answer_1042_3 = MyIsNever<[]>; // expected to be false
+type Answer_1042_4 = MyIsNever<number>; // expected to be false

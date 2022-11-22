@@ -249,3 +249,48 @@ type MyKebabCase<T, S extends string = ""> = T extends `${infer A}${infer B}`
   : S;
 
 type Answer_612 = MyKebabCase<"FooBarBaz">;
+
+/**
+ * Diff
+ */
+
+type Foo_645 = {
+  a: string;
+  b: number;
+};
+type Bar_645 = {
+  a: string;
+  c: boolean;
+};
+
+type HelperGetNullKeys<
+  T extends object,
+  U extends keyof T = keyof T
+> = U extends any ? (T[U] extends null ? U : never) : never;
+
+type SetDiffNull<T extends object, U extends object> = {
+  [P in keyof T | keyof U]: P extends keyof T
+    ? P extends keyof U
+      ? null
+      : MyMerge<T, U>[P]
+    : MyMerge<T, U>[P];
+};
+
+type MyDiff<T extends object, K extends object> = Omit<
+  MyMerge<T, K>,
+  HelperGetNullKeys<SetDiffNull<T, K>>
+>;
+
+type MyDiff2<T, K> = {
+  [P in Exclude<keyof T | keyof K, keyof T & keyof K>]: (T & K)[P];
+};
+
+type Answer_645 = MyDiff<Foo_645, Bar_645>;
+
+type Answer_2_645 = MyDiff2<Foo_645, Bar_645>;
+
+type FieldMapToTime = [
+  string,
+  [string, string],
+  (string | [string, string])?
+][];

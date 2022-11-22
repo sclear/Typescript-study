@@ -321,3 +321,31 @@ type Answer_1042_1 = MyIsNever<undefined>; // expected to be false
 type Answer_1042_2 = MyIsNever<null>; // expected to be false
 type Answer_1042_3 = MyIsNever<[]>; // expected to be false
 type Answer_1042_4 = MyIsNever<number>; // expected to be false
+
+/**
+ * is Union
+ */
+
+type MyIsUnion<T, S = T> = [T] extends [never]
+  ? false
+  : T extends any
+  ? [S] extends [T]
+    ? false
+    : true
+  : never;
+
+type MyIsUnion_1<T, U = T> = T extends any
+  ? [U] extends [T]
+    ? false
+    : true
+  : false;
+
+type MyIsUnion_2<T, U = T> = T extends U
+  ? [U] extends [T]
+    ? false
+    : true
+  : false;
+
+type case1 = MyIsUnion<string>; // false
+type case2 = MyIsUnion<string | number>; // true
+type case3 = MyIsUnion<[string | number]>; // false

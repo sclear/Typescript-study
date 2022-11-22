@@ -294,3 +294,22 @@ type FieldMapToTime = [
   [string, string],
   (string | [string, string])?
 ][];
+
+/**
+ * AnyOf
+ */
+
+//  !!! 0 extends {} ? true : false;
+type FalseFy = 0 | false | "" | [] | Record<string, never | undefined | null>;
+type MyAnyOf<T extends any[]> = T extends [infer F, ...infer R]
+  ? F extends FalseFy
+    ? MyAnyOf<R>
+    : true
+  : false;
+
+type Sample1 = MyAnyOf<[1, "", false, [], {}]>; // true
+type Sample2 = MyAnyOf<[0, "", false, [], {}]>; // false
+
+/**
+ * isNever
+ */

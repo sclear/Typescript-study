@@ -349,3 +349,53 @@ type MyIsUnion_2<T, U = T> = T extends U
 type case1 = MyIsUnion<string>; // false
 type case2 = MyIsUnion<string | number>; // true
 type case3 = MyIsUnion<[string | number]>; // false
+
+interface Animal {
+  name: string;
+}
+
+interface Dogs {
+  name: string;
+  sex: number;
+}
+
+let Eg1: Animal = {
+  name: "12",
+};
+let Eg2: Dogs = {
+  name: "3",
+  sex: 3,
+};
+// 兼容，可以赋值
+Eg1 = Eg2;
+
+/**
+ * PercentageParser
+ */
+
+type Num = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"][number];
+
+type MyPercentageParser<
+  T,
+  R extends [any, any, any] = ["", "", ""]
+> = T extends `${infer A}${infer B}`
+  ? A extends "+" | "-"
+    ? MyPercentageParser<B, [A, R[1], R[2]]>
+    : A extends Num
+    ? MyPercentageParser<B, [R[0], `${R[1]}${A}`, R[2]]>
+    : A extends "%"
+    ? [R[0], R[1], "%"]
+    : R
+  : R;
+
+type PString1 = "";
+type PString2 = "+85%";
+type PString3 = "-85%";
+type PString4 = "+85";
+type PString5 = "85";
+
+type Answer_1978 = MyPercentageParser<PString1>; // expected ['', '', '']
+type Answer_1978_1 = MyPercentageParser<PString2>; // expected ["+", "85", "%"]
+type Answer_1978_2 = MyPercentageParser<PString3>; // expected ["-", "85", "%"]
+type Answer_1978_3 = MyPercentageParser<PString4>; // expected ["", "85", "%"]
+type Answer_1978_4 = MyPercentageParser<PString5>; // expected ["", "85", ""]

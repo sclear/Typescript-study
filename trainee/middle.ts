@@ -415,3 +415,31 @@ type MyDropChar<
   : R;
 
 type Answer_2070 = MyDropChar<" b u t t e r f l y ! ", " ">; // 'butterfly!'
+
+/**
+ * MinusOne
+ */
+
+/**
+ * PickByType
+ */
+
+type PickKeysByValue<
+  T extends object,
+  U = any,
+  S extends keyof T = keyof T
+> = S extends any ? (T[S] extends U ? S : never) : never;
+
+type MyPickByType<T extends object, K> = {
+  [P in PickKeysByValue<T, K>]: T[P];
+};
+
+type Answer_2595 = MyPickByType<
+  {
+    name: string;
+    count: number;
+    isReadonly: boolean;
+    isEnable: boolean;
+  },
+  boolean
+>;

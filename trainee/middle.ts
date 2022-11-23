@@ -399,3 +399,19 @@ type Answer_1978_1 = MyPercentageParser<PString2>; // expected ["+", "85", "%"]
 type Answer_1978_2 = MyPercentageParser<PString3>; // expected ["-", "85", "%"]
 type Answer_1978_3 = MyPercentageParser<PString4>; // expected ["", "85", "%"]
 type Answer_1978_4 = MyPercentageParser<PString5>; // expected ["", "85", ""]
+
+/**
+ * Drop Char
+ */
+
+type MyDropChar<
+  T extends string,
+  V extends string,
+  R extends string = ""
+> = T extends `${infer A}${infer B}`
+  ? A extends V
+    ? MyDropChar<B, V, R>
+    : MyDropChar<B, V, `${R}${A}`>
+  : R;
+
+type Answer_2070 = MyDropChar<" b u t t e r f l y ! ", " ">; // 'butterfly!'

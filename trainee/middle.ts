@@ -443,3 +443,48 @@ type Answer_2595 = MyPickByType<
   },
   boolean
 >;
+
+/**
+ * StartsWith
+ */
+
+type MyStartWith<
+  T extends string,
+  U extends string,
+  S extends string = ""
+> = T extends `${infer A}${infer B}`
+  ? U extends `${S}${A}`
+    ? true
+    : MyStartWith<B, U, `${S}${A}`>
+  : false;
+
+type Answer_2688 = MyStartWith<"abc", "ac">; // expected to be false
+type Answer_2688_1 = MyStartWith<"abc", "ab">; // expected to be true
+type Answer_2688_2 = MyStartWith<"abcd", "abcd">; // expected to be false
+
+type StartsWith<
+  T extends string,
+  U extends string
+> = T extends `${U}${infer Rest}` ? true : false;
+
+/**
+ * EndsWith
+ */
+
+type HelperReverse<
+  T extends string,
+  R extends string = ""
+> = T extends `${infer A}${infer B}` ? HelperReverse<B, `${A}${R}`> : R;
+
+type MyEndsWith<T extends string, U extends string> = MyStartWith<
+  HelperReverse<T>,
+  HelperReverse<U>
+>;
+
+type Answer_2693 = MyEndsWith<"abc", "abcd">; // expected to be true
+type Answer_2693_1 = MyEndsWith<"abc", "abc">; // expected to be true
+type Answer_2693_2 = MyEndsWith<"abc", "d">; // expected to be false
+
+type EndsWith<T extends string, U extends string> = T extends `${infer F}${U}`
+  ? true
+  : false;

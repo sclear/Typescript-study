@@ -488,3 +488,55 @@ type Answer_2693_2 = MyEndsWith<"abc", "d">; // expected to be false
 type EndsWith<T extends string, U extends string> = T extends `${infer F}${U}`
   ? true
   : false;
+
+/**
+ * PartialByKeys
+ */
+
+type myPartialByKeys<T, K extends keyof T = keyof T> = {
+  [P in Exclude<keyof T, K>]: T[P];
+} & {
+  [U in K]?: T[U];
+};
+
+interface User_2757 {
+  name: string;
+  age: number;
+  address: string;
+}
+
+type Answer_2757 = myPartialByKeys<User, "name">;
+
+/**
+ * RequiredByKeys
+ */
+
+type MyRequiredByKeys<T, K extends keyof T> = {
+  [P in Exclude<keyof T, K>]?: T[P];
+} & {
+  [U in K]-?: T[U];
+};
+
+interface User_2759 {
+  name?: string;
+  age?: number;
+  address?: string;
+}
+
+type Answer_2759 = MyRequiredByKeys<User_2759, "name">;
+
+/**
+ * Mutable
+ */
+
+type MyMutable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
+
+interface Todo_2793 {
+  readonly title: string;
+  readonly description: string;
+  readonly completed: boolean;
+}
+
+type Answer_2793 = MyMutable<Todo>;

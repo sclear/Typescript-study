@@ -505,7 +505,7 @@ interface User_2757 {
   address: string;
 }
 
-type Answer_2757 = myPartialByKeys<User, "name">;
+type Answer_2757 = myPartialByKeys<User_2757, "name">;
 
 /**
  * RequiredByKeys
@@ -540,3 +540,19 @@ interface Todo_2793 {
 }
 
 type Answer_2793 = MyMutable<Todo>;
+
+/**
+ * All
+ */
+
+type MyAll<T, V, R = false> = T extends [infer A, ...infer B]
+  ? A extends V
+    ? MyAll<B, V, true>
+    : false
+  : R;
+
+type Test1 = [1, 1, 1];
+type Test2 = [1, 1, 2];
+
+type Answer_18142 = MyAll<Test1, 1>; // should be same as true
+type Answer_18142_1 = MyAll<Test2, 1>; // should be same as false
